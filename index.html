@@ -18,6 +18,19 @@
             overflow-x: hidden;
         }
 
+        /* Scroll Progress Bar */
+        .scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 4px;
+            background: linear-gradient(90deg, #00ffff, #ff00ff, #ffff00);
+            z-index: 10001;
+            transition: width 0.1s ease;
+            box-shadow: 0 0 10px rgba(0,255,255,0.5);
+        }
+
         /* Animated Neural Network Background */
         .neural-background {
             position: fixed;
@@ -300,11 +313,13 @@
             margin-bottom: 20px;
             border-left: 4px solid #00ffff;
             transition: all 0.3s ease;
+            cursor: pointer;
         }
 
         .publication-item:hover {
             background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%);
             transform: translateX(10px);
+            box-shadow: 0 5px 20px rgba(0,255,255,0.1);
         }
 
         .publication-title {
@@ -322,6 +337,16 @@
         .publication-journal {
             color: #aaa;
             font-style: italic;
+        }
+
+        .publication-link {
+            color: #00ffff;
+            text-decoration: none;
+            display: block;
+        }
+
+        .publication-link:hover .publication-title {
+            text-decoration: underline;
         }
 
         /* About Section */
@@ -448,6 +473,9 @@
     </style>
 </head>
 <body>
+    <!-- Scroll Progress Bar -->
+    <div class="scroll-progress" id="scrollProgress"></div>
+
     <!-- Neural Network Background -->
     <div class="neural-background" id="neuralBg"></div>
     
@@ -521,31 +549,41 @@
     <section id="publications" class="section">
         <h2 class="fade-in">Key Publications</h2>
         <div class="fade-in">
-            <div class="publication-item">
-                <div class="publication-title">Restoring hippocampal glucose metabolism rescues cognition across Alzheimer's disease pathologies</div>
-                <div class="publication-authors">Minhas PS*, Jones JR*, Latif-Hernandez A*, et al. (* co-first authors)</div>
-                <div class="publication-journal">Science, 2024</div>
-            </div>
-            <div class="publication-item">
-                <div class="publication-title">Incorporation of nucleoside analog maps genome repair sites in postmitotic human neurons</div>
-                <div class="publication-authors">Reid DA, Reed PJ, Schlachetzki JCM, Nitulescu II, Chou G, Tsui EC, Jones JR, et al.</div>
-                <div class="publication-journal">Science, 2021</div>
-            </div>
-            <div class="publication-item">
-                <div class="publication-title">Neural cell state shifts and fate loss in aging and age-related diseases</div>
-                <div class="publication-authors">Traxler L, Lucciola R, Herdy J, Jones JR, Mertens J, Gage FH</div>
-                <div class="publication-journal">Nature Reviews Neurology, 2023</div>
-            </div>
-            <div class="publication-item">
-                <div class="publication-title">Mutations in GFAP Disrupt the Distribution and Function of Organelles in Human Astrocytes</div>
-                <div class="publication-authors">Jones JR, Kong LH, Hanna IV, Michael G, Hoffman B, et al.</div>
-                <div class="publication-journal">Cell Reports, 2018</div>
-            </div>
-            <div class="publication-item">
-                <div class="publication-title">Generation of serotonin neurons from human pluripotent stem cells</div>
-                <div class="publication-authors">Lu J, Zhong X, Liu H, Huang CT, Sherafat MA, Jones J, et al.</div>
-                <div class="publication-journal">Nature Biotechnology, 2016</div>
-            </div>
+            <a href="https://www.science.org/doi/10.1126/science.abm7891" target="_blank" class="publication-link">
+                <div class="publication-item">
+                    <div class="publication-title">Restoring hippocampal glucose metabolism rescues cognition across Alzheimer's disease pathologies</div>
+                    <div class="publication-authors">Minhas PS*, Jones JR*, Latif-Hernandez A*, et al. (* co-first authors)</div>
+                    <div class="publication-journal">Science, 2024</div>
+                </div>
+            </a>
+            <a href="https://www.science.org/doi/10.1126/science.abb9032" target="_blank" class="publication-link">
+                <div class="publication-item">
+                    <div class="publication-title">Incorporation of nucleoside analog maps genome repair sites in postmitotic human neurons</div>
+                    <div class="publication-authors">Reid DA, Reed PJ, Schlachetzki JCM, Nitulescu II, Chou G, Tsui EC, Jones JR, et al.</div>
+                    <div class="publication-journal">Science, 2021</div>
+                </div>
+            </a>
+            <a href="https://www.nature.com/articles/s41582-023-00830-y" target="_blank" class="publication-link">
+                <div class="publication-item">
+                    <div class="publication-title">Neural cell state shifts and fate loss in aging and age-related diseases</div>
+                    <div class="publication-authors">Traxler L, Lucciola R, Herdy J, Jones JR, Mertens J, Gage FH</div>
+                    <div class="publication-journal">Nature Reviews Neurology, 2023</div>
+                </div>
+            </a>
+            <a href="https://www.cell.com/cell-reports/fulltext/S2211-1247(18)31557-X" target="_blank" class="publication-link">
+                <div class="publication-item">
+                    <div class="publication-title">Mutations in GFAP Disrupt the Distribution and Function of Organelles in Human Astrocytes</div>
+                    <div class="publication-authors">Jones JR, Kong LH, Hanna IV, Michael G, Hoffman B, et al.</div>
+                    <div class="publication-journal">Cell Reports, 2018</div>
+                </div>
+            </a>
+            <a href="https://www.nature.com/articles/nbt.3435" target="_blank" class="publication-link">
+                <div class="publication-item">
+                    <div class="publication-title">Generation of serotonin neurons from human pluripotent stem cells</div>
+                    <div class="publication-authors">Lu J, Zhong X, Liu H, Huang CT, Sherafat MA, Jones J, et al.</div>
+                    <div class="publication-journal">Nature Biotechnology, 2016</div>
+                </div>
+            </a>
         </div>
     </section>
 
@@ -561,7 +599,8 @@
                 <p>As former Interim Director of Salk's Stem Cell Core (2021-2022), Dr. Jones has demonstrated exceptional leadership in advancing stem cell research and fostering collaborative scientific environments.</p>
             </div>
             <div class="about-image">
-<img src="jeff-jones.jpg" alt="Dr. Jeffrey R. Jones" class="profile-pic">            </div>
+                <div class="profile-pic" style="background: linear-gradient(45deg, #00ffff, #ff00ff); display: flex; align-items: center; justify-content: center; font-size: 4rem;">👨‍🔬</div>
+            </div>
         </div>
     </section>
 
@@ -620,10 +659,18 @@
 
     <!-- Footer -->
     <footer>
-        <p>&copy; 2025 The Jones Lab, University of Florida. Advancing the frontiers of neuroscience and aging research.</p>
+        <p>&copy; 2024 The Jones Lab, University of Florida. Advancing the frontiers of neuroscience and aging research.</p>
     </footer>
 
     <script>
+        // Scroll progress bar
+        function updateScrollProgress() {
+            const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+            const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (scrollTop / scrollHeight) * 100;
+            document.getElementById('scrollProgress').style.width = scrolled + '%';
+        }
+
         // Create animated neural network background
         function createNeuralNetwork() {
             const bg = document.getElementById('neuralBg');
@@ -716,11 +763,13 @@
         window.addEventListener('load', () => {
             createNeuralNetwork();
             animateOnScroll();
+            updateScrollProgress();
         });
         
         window.addEventListener('scroll', () => {
             animateOnScroll();
             handleHeaderScroll();
+            updateScrollProgress();
         });
         
         window.addEventListener('resize', () => {
@@ -745,5 +794,3 @@
     </script>
 </body>
 </html>
-
-
