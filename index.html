@@ -112,7 +112,7 @@
         }
 
         nav {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
             display: flex;
             justify-content: space-between;
@@ -129,24 +129,24 @@
             background-clip: text;
         }
 
-        .nav-links {
+        .nav-center {
             display: flex;
             list-style: none;
             gap: 30px;
         }
 
-        .nav-links a {
+        .nav-center a {
             color: #fff;
             text-decoration: none;
             transition: color 0.3s ease;
             position: relative;
         }
 
-        .nav-links a:hover {
+        .nav-center a:hover {
             color: #00ffff;
         }
 
-        .nav-links a:after {
+        .nav-center a:after {
             content: '';
             position: absolute;
             width: 0;
@@ -158,8 +158,32 @@
             transform: translateX(-50%);
         }
 
-        .nav-links a:hover:after {
+        .nav-center a:hover:after {
             width: 100%;
+        }
+
+        .nav-external {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .nav-external a {
+            padding: 8px 16px;
+            background: linear-gradient(45deg, rgba(0,255,255,0.1), rgba(255,0,255,0.1));
+            border-radius: 20px;
+            border: 1px solid rgba(0,255,255,0.3);
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .nav-external a:hover {
+            background: linear-gradient(45deg, rgba(0,255,255,0.2), rgba(255,0,255,0.2));
+            border-color: rgba(0,255,255,0.6);
+            transform: translateY(-2px);
+            color: #00ffff;
         }
 
         /* Hero Section */
@@ -490,13 +514,17 @@
     <header>
         <nav>
             <div class="logo">The Jones Lab</div>
-            <ul class="nav-links">
+            <ul class="nav-center">
                 <li><a href="#home">Home</a></li>
                 <li><a href="#research">Research</a></li>
                 <li><a href="#publications">Publications</a></li>
                 <li><a href="#about">About</a></li>
                 <li><a href="#contact">Contact</a></li>
             </ul>
+            <div class="nav-external">
+                <a href="https://scholar.google.com/citations?user=-obP0w8AAAAJ&hl=en" target="_blank">Google Scholar</a>
+                <a href="https://neuroscience.ufl.edu/" target="_blank">UF Neuroscience</a>
+            </div>
         </nav>
     </header>
 
@@ -550,7 +578,7 @@
     <section id="publications" class="section">
         <h2 class="fade-in">Key Publications</h2>
         <div class="fade-in">
-            <a href="https://www.science.org/doi/10.1126/science.abm7891" target="_blank" class="publication-link">
+            <a href="https://www.science.org/doi/10.1126/science.abm6131" target="_blank" class="publication-link">
                 <div class="publication-item">
                     <div class="publication-title">Restoring hippocampal glucose metabolism rescues cognition across Alzheimer's disease pathologies</div>
                     <div class="publication-authors">Minhas PS*, Jones JR*, Latif-Hernandez A*, et al. (* co-first authors)</div>
@@ -600,7 +628,7 @@
                 <p>As former Interim Director of Salk's Stem Cell Core (2021-2022), Dr. Jones has demonstrated exceptional leadership in advancing stem cell research and fostering collaborative scientific environments.</p>
             </div>
             <div class="about-image">
-                <div class="profile-pic" style="background: linear-gradient(45deg, #00ffff, #ff00ff); display: flex; align-items: center; justify-content: center; font-size: 4rem;">👨‍🔬</div>
+                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&h=300&fit=crop&crop=face&auto=format&q=80" alt="Dr. Jeffrey R. Jones" class="profile-pic">
             </div>
         </div>
     </section>
