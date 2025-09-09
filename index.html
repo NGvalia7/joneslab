@@ -1,178 +1,734 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Research - The Jones Lab</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      background-color: #f9f9f9;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Jones Lab - University of Florida</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-    header {
-      background: #003366;
-      color: #fff;
-      padding: 20px;
-      text-align: center;
-    }
+        body {
+            font-family: 'Arial', sans-serif;
+            background: #000;
+            color: #fff;
+            overflow-x: hidden;
+        }
 
-    nav {
-      background: #0055a5;
-      padding: 10px;
-      text-align: center;
-    }
+        /* Scroll Progress Bar */
+        .scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 4px;
+            background: linear-gradient(90deg, #00ffff, #ff00ff, #ffff00);
+            z-index: 10001;
+            transition: width 0.1s ease;
+            box-shadow: 0 0 10px rgba(0,255,255,0.5);
+        }
 
-    nav a {
-      color: #fff;
-      margin: 0 15px;
-      text-decoration: none;
-      font-weight: bold;
-    }
+        /* Animated Neural Network Background */
+        .neural-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
+        }
 
-    nav a:hover {
-      text-decoration: underline;
-    }
+        .neuron {
+            position: absolute;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(0,255,255,0.6) 0%, rgba(0,255,255,0.1) 70%, transparent 100%);
+            animation: pulse 3s ease-in-out infinite;
+        }
 
-    h1 {
-      text-align: center;
-      margin-top: 30px;
-    }
+        .synapse {
+            position: absolute;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, rgba(0,255,255,0.5), transparent);
+            transform-origin: left;
+            animation: signal 4s linear infinite;
+        }
 
-    .research-card {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      background: #fff;
-      margin: 20px auto;
-      border-radius: 12px;
-      overflow: hidden;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-      max-width: 900px;
-      transition: transform 0.3s ease;
-    }
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.6; }
+            50% { transform: scale(1.2); opacity: 1; }
+        }
 
-    .research-card:hover {
-      transform: translateY(-5px);
-    }
+        @keyframes signal {
+            0% { transform: scaleX(0); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: scaleX(1); opacity: 0; }
+        }
 
-    .research-card img {
-      width: 100%;
-      max-width: 350px;
-      object-fit: cover;
-      transition: transform 0.3s ease;
-    }
+        /* DNA Helix Animation */
+        .dna-helix {
+            position: fixed;
+            right: -100px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 200px;
+            height: 400px;
+            opacity: 0.3;
+            z-index: 0;
+            perspective: 800px;
+        }
 
-    .research-card img:hover {
-      transform: scale(1.1);
-    }
+        .dna-strand {
+            position: absolute;
+            left: 50%;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(to bottom, #ff0080, #00ff80);
+            border-radius: 2px;
+            animation: dnaRotate 8s linear infinite;
+        }
 
-    .research-content {
-      padding: 20px;
-      flex: 1;
-      min-width: 250px;
-    }
+        .dna-strand:nth-child(1) {
+            transform: rotateY(0deg) translateX(25px);
+        }
 
-    .research-content h2 {
-      margin-bottom: 10px;
-      font-size: 1.5em;
-    }
+        .dna-strand:nth-child(2) {
+            transform: rotateY(180deg) translateX(25px);
+            animation-delay: -4s;
+        }
 
-    .research-content p {
-      margin-bottom: 10px;
-      color: #333;
-    }
+        @keyframes dnaRotate {
+            0% { transform: rotateY(0deg) translateX(25px) rotateY(0deg); }
+            100% { transform: rotateY(360deg) translateX(25px) rotateY(-360deg); }
+        }
 
-    .research-content a {
-      color: #0056b3;
-      text-decoration: none;
-      font-weight: bold;
-    }
+        /* Header */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(0,0,0,0.9);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 20px 0;
+            transition: all 0.3s ease;
+        }
 
-    .research-content a:hover {
-      text-decoration: underline;
-    }
+        nav {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+        }
 
-    /* Expandable Notes */
-    .more-text {
-      display: none;
-      margin-top: 10px;
-      color: #444;
-    }
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            background: linear-gradient(45deg, #00ffff, #ff00ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
 
-    .toggle-btn {
-      background: #0055a5;
-      color: #fff;
-      border: none;
-      padding: 8px 12px;
-      border-radius: 6px;
-      cursor: pointer;
-      font-size: 0.9em;
-      margin-top: 10px;
-    }
+        .nav-center {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
 
-    .toggle-btn:hover {
-      background: #003f7f;
-    }
-  </style>
+        .nav-center a {
+            color: #fff;
+            text-decoration: none;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .nav-center a:hover {
+            color: #00ffff;
+        }
+
+        .nav-center a:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 50%;
+            background: #00ffff;
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+
+        .nav-center a:hover:after {
+            width: 100%;
+        }
+
+        .nav-external {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .nav-external a {
+            padding: 8px 16px;
+            background: linear-gradient(45deg, rgba(0,255,255,0.1), rgba(255,0,255,0.1));
+            border-radius: 20px;
+            border: 1px solid rgba(0,255,255,0.3);
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .nav-external a:hover {
+            background: linear-gradient(45deg, rgba(0,255,255,0.2), rgba(255,0,255,0.2));
+            border-color: rgba(0,255,255,0.6);
+            transform: translateY(-2px);
+            color: #00ffff;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            z-index: 10;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            background: linear-gradient(45deg, #00ffff, #ff00ff, #ffff00);
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: textShimmer 3s ease-in-out infinite;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 30px;
+            opacity: 0.9;
+            line-height: 1.6;
+        }
+
+        .cta-button {
+            padding: 15px 40px;
+            background: linear-gradient(45deg, #00ffff, #ff00ff);
+            color: #000;
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            display: inline-block;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0,255,255,0.3);
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes textShimmer {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        /* Sections */
+        .section {
+            padding: 100px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 10;
+        }
+
+        .section h2 {
+            font-size: 3rem;
+            margin-bottom: 30px;
+            text-align: center;
+            background: linear-gradient(45deg, #00ffff, #ffffff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .research-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .research-card {
+            background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            border: 1px solid rgba(255,255,255,0.2);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .research-card:hover {
+            transform: translateY(-10px) rotateX(5deg);
+            box-shadow: 0 20px 40px rgba(0,255,255,0.1);
+        }
+
+        .research-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .research-card:hover::before {
+            left: 100%;
+        }
+
+        .research-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            color: #00ffff;
+        }
+
+        .research-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: #00ffff;
+        }
+
+        .research-card p {
+            line-height: 1.6;
+            opacity: 0.9;
+        }
+
+        /* Publications Section */
+        .publication-item {
+            background: linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.02) 100%);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 20px;
+            border-left: 4px solid #00ffff;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .publication-item:hover {
+            background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%);
+            transform: translateX(10px);
+            box-shadow: 0 5px 20px rgba(0,255,255,0.1);
+        }
+
+        .publication-title {
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: #00ffff;
+            margin-bottom: 10px;
+        }
+
+        .publication-authors {
+            color: #ccc;
+            margin-bottom: 5px;
+        }
+
+        .publication-journal {
+            color: #aaa;
+            font-style: italic;
+        }
+
+        .publication-link {
+            color: #00ffff;
+            text-decoration: none;
+            display: block;
+        }
+
+        .publication-link:hover .publication-title {
+            text-decoration: underline;
+        }
+
+        /* About Section */
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: center;
+            margin-top: 50px;
+        }
+
+        .about-text {
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+
+        .about-image {
+            text-align: center;
+        }
+
+        .profile-pic {
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            border: 4px solid #00ffff;
+            box-shadow: 0 0 50px rgba(0,255,255,0.3);
+            object-fit: cover;
+        }
+
+        /* Skills Section */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 50px;
+        }
+
+        .skill-item {
+            background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .skill-item:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 30px rgba(0,255,255,0.2);
+        }
+
+        .skill-item h4 {
+            color: #00ffff;
+            margin-bottom: 10px;
+        }
+
+        /* Contact Section */
+        .contact-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .contact-item {
+            background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .contact-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,255,255,0.1);
+        }
+
+        .contact-icon {
+            font-size: 2rem;
+            color: #00ffff;
+            margin-bottom: 15px;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 50px 20px;
+            background: rgba(0,0,0,0.9);
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            .section h2 {
+                font-size: 2rem;
+            }
+            .nav-center,
+            .nav-external {
+                display: none;
+            }
+            .about-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+        }
+
+        /* Scroll animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease-out;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
 </head>
 <body>
-  <header>
-    <h1>The Jones Lab</h1>
-    <p>University of Florida - Research</p>
-  </header>
+    <div class="scroll-progress" id="scrollProgress"></div>
 
-  <nav>
-    <a href="index.html">Home</a>
-    <a href="research.html">Research</a>
-    <a href="#">Publications</a>
-    <a href="#">Contact</a>
-  </nav>
-
-  <h1>Our Research</h1>
-
-  <!-- Research Card 1 -->
-  <div class="research-card">
-    <img src="images/figure1.jpg" alt="Publication Figure 1">
-    <div class="research-content">
-      <h2>Neuronal Pathway Regulation</h2>
-      <p>This study explores how XYZ pathway regulates neuronal activity and contributes to brain plasticity.</p>
-      <button class="toggle-btn" onclick="toggleText(this)">Read More</button>
-      <div class="more-text">
-        <p>We found that modulation of this pathway significantly altered synaptic activity. These findings provide insight into potential therapeutic strategies for neurodegenerative conditions.</p>
-        <a href="https://doi.org/10.xxxx/your-paper" target="_blank">Read Full Paper</a>
-      </div>
+    <div class="neural-background" id="neuralBg"></div>
+    
+    <div class="dna-helix">
+        <div class="dna-strand"></div>
+        <div class="dna-strand"></div>
     </div>
-  </div>
 
-  <!-- Research Card 2 -->
-  <div class="research-card">
-    <img src="images/figure2.jpg" alt="Publication Figure 2">
-    <div class="research-content">
-      <h2>Astrocytic Conversion Models</h2>
-      <p>We developed a novel model for direct astrocytic conversion, providing new insights into brain repair.</p>
-      <button class="toggle-btn" onclick="toggleText(this)">Read More</button>
-      <div class="more-text">
-        <p>Our experiments show enhanced GFAP expression in fibroblast-to-astrocyte reprogramming. This lays groundwork for regenerative medicine applications in neurodegenerative diseases.</p>
-        <a href="https://doi.org/10.xxxx/another-paper" target="_blank">Read Full Paper</a>
-      </div>
-    </div>
-  </div>
+    <header>
+        <nav>
+            <div class="logo">The Jones Lab</div>
+            <ul class="nav-center">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#research">Research</a></li>
+                <li><a href="#publications">Publications</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <div class="nav-external">
+                <a href="https://scholar.google.com/citations?user=-obP0w8AAAAJ&hl=en" target="_blank">Google Scholar</a>
+                <a href="https://neuroscience.ufl.edu/" target="_blank">UF Neuroscience</a>
+            </div>
+        </nav>
+    </header>
 
-  <script>
-    function toggleText(button) {
-      const moreText = button.nextElementSibling;
-      if (moreText.style.display === "block") {
-        moreText.style.display = "none";
-        button.textContent = "Read More";
-      } else {
-        moreText.style.display = "block";
-        button.textContent = "Read Less";
-      }
-    }
-  </script>
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1>Jeffrey R. Jones, PhD</h1>
+            <p>Pioneering Research in Cellular Aging, DNA Damage, and Neural Development at the University of Florida</p>
+            <a href="#research" class="cta-button">Explore Our Research</a>
+        </div>
+    </section>
+
+    <section id="research" class="section">
+        <h2 class="fade-in">Research Focus</h2>
+        <div class="research-grid">
+            <div class="research-card fade-in">
+                <div class="research-icon">🧬</div>
+                <h3>DNA Damage & Aging</h3>
+                <p>Understanding the cellular mechanisms of aging and their contributions to cognitive decline through advanced genomic techniques and bioinformatics analysis.</p>
+            </div>
+            <div class="research-card fade-in">
+                <div class="research-icon">🔬</div>
+                <h3>Stem Cell Biology</h3>
+                <p>Expert in genetic engineering (CRISPR/Cas9), stem cell culture, human dermal fibroblast derivation, and transdifferentiation techniques.</p>
+            </div>
+            <div class="research-card fade-in">
+                <div class="research-icon">🧠</div>
+                <h3>Neural Development</h3>
+                <p>Modeling brain disorders using induced pluripotent stem cells, organoids, and human neural development systems for disease research.</p>
+            </div>
+            <div class="research-card fade-in">
+                <div class="research-icon">⚡</div>
+                <h3>Cellular Metabolism</h3>
+                <p>Investigating metabolic changes in aging cells and their role in neurodegeneration, with focus on glucose metabolism and energy production.</p>
+            </div>
+            <div class="research-card fade-in">
+                <div class="research-icon">🔍</div>
+                <h3>Next-Gen Sequencing</h3>
+                <p>Developing and optimizing cutting-edge sequencing techniques with advanced bioinformatics skills in bash, python, and R for large data analysis.</p>
+            </div>
+            <div class="research-card fade-in">
+                <div class="research-icon">🎯</div>
+                <h3>Disease Modeling</h3>
+                <p>Creating innovative disease models to study neurodegenerative conditions including Alzheimer's disease and Alexander disease using human cell systems.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="publications" class="section">
+        <h2 class="fade-in">Key Publications</h2>
+        <div class="fade-in">
+            <a href="https://www.science.org/doi/10.1126/science.abm6131" target="_blank" class="publication-link">
+                <div class="publication-item">
+                    <div class="publication-title">Restoring hippocampal glucose metabolism rescues cognition across Alzheimer's disease pathologies</div>
+                    <div class="publication-authors">Minhas PS*, Jones JR*, Latif-Hernandez A*, et al. (* co-first authors)</div>
+                    <div class="publication-journal">Science, 2024</div>
+                </div>
+            </a>
+            <a href="https://www.science.org/doi/10.1126/science.abb9032" target="_blank" class="publication-link">
+                <div class="publication-item">
+                    <div class="publication-title">Incorporation of nucleoside analog maps genome repair sites in postmitotic human neurons</div>
+                    <div class="publication-authors">Reid DA, Reed PJ, Schlachetzki JCM, Nitulescu II, Chou G, Tsui EC, Jones JR, et al.</div>
+                    <div class="publication-journal">Science, 2021</div>
+                </div>
+            </a>
+            <a href="https://www.nature.com/articles/s41582-023-00830-y" target="_blank" class="publication-link">
+                <div class="publication-item">
+                    <div class="publication-title">Neural cell state shifts and fate loss in aging and age-related diseases</div>
+                    <div class="publication-authors">Traxler L, Lucciola R, Herdy J, Jones JR, Mertens J, Gage FH</div>
+                    <div class="publication-journal">Nature Reviews Neurology, 2023</div>
+                </div>
+            </a>
+        </div>
+    </section>
+
+    <section id="about" class="section">
+        <h2 class="fade-in">About Dr. Jones</h2>
+        <div class="about-content fade-in">
+            <div class="about-text">
+                <p>Dr. Jeffrey R. Jones is an innovative neuroscientist joining the University of Florida with extensive experience from the Salk Institute for Biological Studies, where he worked in the laboratory of renowned scientist Fred H. Gage.</p>
+                <p>His groundbreaking research focuses on understanding the cellular mechanisms of aging and their contributions to cognitive decline, with particular expertise in DNA damage and cellular metabolism. Dr. Jones brings a multidisciplinary molecular biology skill set that includes cutting-edge techniques in genetic engineering, stem cell biology, and advanced genomics.</p>
+            </div>
+            <div class="about-image">
+                <img src="https://picsum.photos/seed/drjones/300/300" alt="Dr. Jeffrey R. Jones" class="profile-pic">
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="section">
+        <h2 class="fade-in">Join Our Lab</h2>
+        <div class="contact-info fade-in">
+            <div class="contact-item">
+                <div class="contact-icon">🏛️</div>
+                <h3>Location</h3>
+                <p>University of Florida<br>Department of Neuroscience<br>Gainesville, FL</p>
+            </div>
+            <div class="contact-item">
+                <div class="contact-icon">📧</div>
+                <h3>Email</h3>
+                <p>Interested in joining our research team?<br>Contact us for opportunities</p>
+            </div>
+            <div class="contact-item">
+                <div class="contact-icon">🔬</div>
+                <h3>Research Focus</h3>
+                <p>Graduate students and postdocs<br>welcome to apply</p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 The Jones Lab, University of Florida. Advancing the frontiers of neuroscience and aging research.</p>
+    </footer>
+
+    <script>
+        // Scroll progress bar
+        function updateScrollProgress() {
+            const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+            const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (scrollTop / scrollHeight) * 100;
+            document.getElementById('scrollProgress').style.width = scrolled + '%';
+        }
+
+        // Create animated neural network background
+        function createNeuralNetwork() {
+            const bg = document.getElementById('neuralBg');
+            if (!bg) return;
+            bg.innerHTML = ''; // Clear previous elements on resize
+            const neurons = [];
+            const isMobile = window.innerWidth < 768;
+            const neuronCount = isMobile ? 20 : 50; // Fewer neurons on mobile for performance
+
+            for (let i = 0; i < neuronCount; i++) {
+                const neuron = document.createElement('div');
+                neuron.className = 'neuron';
+                const size = Math.random() * 15 + 5;
+                neuron.style.width = size + 'px';
+                neuron.style.height = size + 'px';
+                const x = Math.random() * window.innerWidth;
+                const y = Math.random() * (document.documentElement.scrollHeight > window.innerHeight ? document.documentElement.scrollHeight : window.innerHeight);
+                neuron.style.left = x + 'px';
+                neuron.style.top = y + 'px';
+                neuron.style.animationDelay = Math.random() * 3 + 's';
+                bg.appendChild(neuron);
+                neurons.push({ element: neuron, x: x, y: y });
+            }
+            
+            for (let i = 0; i < neurons.length; i++) {
+                for (let j = i + 1; j < neurons.length; j++) {
+                    const distance = Math.sqrt(Math.pow(neurons[i].x - neurons[j].x, 2) + Math.pow(neurons[i].y - neurons[j].y, 2));
+                    if (distance < (isMobile ? 150 : 200) && Math.random() > 0.7) {
+                        const synapse = document.createElement('div');
+                        synapse.className = 'synapse';
+                        const angle = Math.atan2(neurons[j].y - neurons[i].y, neurons[j].x - neurons[i].x);
+                        synapse.style.left = neurons[i].x + 'px';
+                        synapse.style.top = neurons[i].y + 'px';
+                        synapse.style.width = distance + 'px';
+                        synapse.style.transform = `rotate(${angle}rad)`;
+                        synapse.style.animationDelay = Math.random() * 4 + 's';
+                        bg.appendChild(synapse);
+                    }
+                }
+            }
+        }
+        
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        // Scroll animations
+        const fadeInElements = document.querySelectorAll('.fade-in');
+        function animateOnScroll() {
+            const windowHeight = window.innerHeight;
+            fadeInElements.forEach(element => {
+                const elementTop = element.getBoundingClientRect().top;
+                if (elementTop < windowHeight - 100) {
+                    element.classList.add('visible');
+                }
+            });
+        }
+        
+        // Event Listeners
+        window.addEventListener('load', () => {
+            createNeuralNetwork();
+            animateOnScroll();
+            updateScrollProgress();
+        });
+
+        window.addEventListener('scroll', () => {
+            animateOnScroll();
+            updateScrollProgress();
+        });
+
+        let resizeTimer;
+        window.addEventListener('resize', () => {
+            clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(createNeuralNetwork, 500);
+        });
+    </script>
 </body>
 </html>
-
